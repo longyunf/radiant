@@ -1,0 +1,14 @@
+torch
+torchvision
+nuscenes-devkit
+mmcv-full==1.3.12
+mmsegmentation==0.14.1
+mmdet==2.14.0
+mmdet3d==0.16.0
+numpy==1.19.5
+matplotlib
+shapely
+argparse
+tqdm
+pyquaternion
+scikit-learn
