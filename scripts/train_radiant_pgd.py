@@ -307,16 +307,9 @@ def main(args):
     else:
         cfg.optimizer_cfg['lr'] = cfg.optimizer_cfg['lr']
     
-        
-    # args.train_mini = True
-    args.train_mini = False
-    
-    args.train_ann_file = None
-    # args.val_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_val_mini.coco.json')   
+    args.train_ann_file = None  
     args.val_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_val.coco.json')
-       
-    # args.test_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_test_mini.coco.json')
-    args.val_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_test.coco.json')
+    args.test_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_test.coco.json')
     
     if not args.dir_result: 
         args.dir_result = join(args.dir_data, 'fusion_data', 'train_result', 'radiant_pgd')         
@@ -351,7 +344,12 @@ def main(args):
             args.train_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_train_mini.coco.json')
         else:
             args.train_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_train.coco.json')
-        
+   
+        if args.val_mini:
+            args.val_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_val_mini.coco.json')
+        else:
+            args.val_ann_file = join(args.dir_data, 'fusion_data', 'nus_infos_val.coco.json')
+            
         train_loader = init_data_loader(args, NuScenesFusionDataset, 'train')
         val_loader = init_data_loader(args, NuScenesFusionDataset, 'val')
         
@@ -418,7 +416,9 @@ if __name__ == '__main__':
     parser.add_argument('--test_samples_per_gpu', type=int, default=1)    
     parser.add_argument('--workers_per_gpu', type=int, default=2)  
     parser.add_argument('--log_interval', type=int, default=5)
-    parser.add_argument('--lr', type=float, default=None, help='Learning rate')    
+    parser.add_argument('--lr', type=float, default=None, help='Learning rate')   
+    parser.add_argument('--train_mini', action='store_true', default=False)
+    parser.add_argument('--val_mini', type=bool, default=True)
     
     parser.add_argument('--do_eval', action='store_true', default=False, help='compute mAP for testing set')
     parser.add_argument('--eval_set', type=str, default='val', choices=['val', 'test'])
